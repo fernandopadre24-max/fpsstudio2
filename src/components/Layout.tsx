@@ -24,6 +24,7 @@ export default function Layout({ children }: LayoutProps) {
   const adminLinks = [
     { to: "/admin", icon: LayoutDashboard, label: "Dashboard" },
     { to: "/admin/agendamentos", icon: Calendar, label: "Agendamentos" },
+    { to: "/admin/servicos", icon: ShoppingBag, label: "Serviços & Produtos" },
     { to: "/admin/pedidos", icon: Package, label: "Pedidos" },
     { to: "/admin/chat", icon: MessageCircle, label: "Chat" },
     { to: "/admin/financeiro", icon: DollarSign, label: "Financeiro" },

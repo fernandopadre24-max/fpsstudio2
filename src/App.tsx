@@ -15,6 +15,7 @@ import ClientPayments from "./pages/client/ClientPayments";
 import ClientServices from "./pages/client/ClientServices";
 import ClientOrders from "./pages/client/ClientOrders";
 import AdminOrders from "./pages/admin/AdminOrders";
+import AdminServices from "./pages/admin/AdminServices";
 
 function ProtectedRoute({ children, role }: { children: React.ReactNode; role: "admin" | "client" }) {
   const { currentUser } = useApp();
@@ -38,6 +39,7 @@ function AppRoutes() {
       <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
       <Route path="/admin/agendamentos" element={<ProtectedRoute role="admin"><AdminSchedule /></ProtectedRoute>} />
       <Route path="/admin/pedidos" element={<ProtectedRoute role="admin"><AdminOrders /></ProtectedRoute>} />
+      <Route path="/admin/servicos" element={<ProtectedRoute role="admin"><AdminServices /></ProtectedRoute>} />
       <Route path="/admin/chat" element={<ProtectedRoute role="admin"><AdminChat /></ProtectedRoute>} />
       <Route path="/admin/financeiro" element={<ProtectedRoute role="admin"><AdminFinancial /></ProtectedRoute>} />
       <Route path="/admin/relatorios" element={<ProtectedRoute role="admin"><AdminReports /></ProtectedRoute>} />
