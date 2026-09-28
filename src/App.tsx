@@ -12,6 +12,9 @@ import ClientDashboard from "./pages/client/ClientDashboard";
 import ClientSchedule from "./pages/client/ClientSchedule";
 import ClientChat from "./pages/client/ClientChat";
 import ClientPayments from "./pages/client/ClientPayments";
+import ClientServices from "./pages/client/ClientServices";
+import ClientOrders from "./pages/client/ClientOrders";
+import AdminOrders from "./pages/admin/AdminOrders";
 
 function ProtectedRoute({ children, role }: { children: React.ReactNode; role: "admin" | "client" }) {
   const { currentUser } = useApp();
@@ -34,6 +37,7 @@ function AppRoutes() {
       {/* Admin Routes */}
       <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
       <Route path="/admin/agendamentos" element={<ProtectedRoute role="admin"><AdminSchedule /></ProtectedRoute>} />
+      <Route path="/admin/pedidos" element={<ProtectedRoute role="admin"><AdminOrders /></ProtectedRoute>} />
       <Route path="/admin/chat" element={<ProtectedRoute role="admin"><AdminChat /></ProtectedRoute>} />
       <Route path="/admin/financeiro" element={<ProtectedRoute role="admin"><AdminFinancial /></ProtectedRoute>} />
       <Route path="/admin/relatorios" element={<ProtectedRoute role="admin"><AdminReports /></ProtectedRoute>} />
@@ -41,6 +45,8 @@ function AppRoutes() {
       
       {/* Client Routes */}
       <Route path="/cliente" element={<ProtectedRoute role="client"><ClientDashboard /></ProtectedRoute>} />
+      <Route path="/cliente/servicos" element={<ProtectedRoute role="client"><ClientServices /></ProtectedRoute>} />
+      <Route path="/cliente/pedidos" element={<ProtectedRoute role="client"><ClientOrders /></ProtectedRoute>} />
       <Route path="/cliente/agendar" element={<ProtectedRoute role="client"><ClientSchedule /></ProtectedRoute>} />
       <Route path="/cliente/chat" element={<ProtectedRoute role="client"><ClientChat /></ProtectedRoute>} />
       <Route path="/cliente/pagamentos" element={<ProtectedRoute role="client"><ClientPayments /></ProtectedRoute>} />

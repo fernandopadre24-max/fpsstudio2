@@ -21,6 +21,44 @@ export interface Service {
   price: number;
   duration: number; // em horas
   description: string;
+  image?: string;
+  features?: string[];
+}
+
+export type ProductCategory = "merch" | "acessorios" | "midias" | "pacotes";
+
+export interface Product {
+  id: string;
+  name: string;
+  category: ProductCategory;
+  price: number;
+  description: string;
+  image?: string;
+  stock: number;
+  featured?: boolean;
+}
+
+export interface CartItem {
+  id: string;
+  type: "service" | "product";
+  itemId: string;
+  name: string;
+  price: number;
+  quantity: number;
+  duration?: number;
+}
+
+export type OrderStatus = "pendente" | "aprovado" | "em_producao" | "concluido" | "cancelado";
+
+export interface Order {
+  id: string;
+  clientId: string;
+  items: CartItem[];
+  total: number;
+  status: OrderStatus;
+  notes?: string;
+  createdAt: string;
+  approvedAt?: string;
 }
 
 export type ScheduleStatus = "pendente" | "confirmado" | "cancelado" | "concluido";
@@ -90,6 +128,9 @@ export interface AppState {
   currentUser: User | null;
   users: User[];
   services: Service[];
+  products: Product[];
+  cart: CartItem[];
+  orders: Order[];
   schedules: Schedule[];
   quotes: Quote[];
   payments: Payment[];

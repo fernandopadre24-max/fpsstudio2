@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard, Calendar, MessageCircle, DollarSign, FileText,
-  Users, LogOut, Bell, Music, Menu, X, ChevronRight
+  Users, LogOut, Bell, Music, Menu, X, ChevronRight, Package, ShoppingBag
 } from "lucide-react";
 import { useApp } from "../context/AppContext";
 
@@ -24,6 +24,7 @@ export default function Layout({ children }: LayoutProps) {
   const adminLinks = [
     { to: "/admin", icon: LayoutDashboard, label: "Dashboard" },
     { to: "/admin/agendamentos", icon: Calendar, label: "Agendamentos" },
+    { to: "/admin/pedidos", icon: Package, label: "Pedidos" },
     { to: "/admin/chat", icon: MessageCircle, label: "Chat" },
     { to: "/admin/financeiro", icon: DollarSign, label: "Financeiro" },
     { to: "/admin/relatorios", icon: FileText, label: "Relatórios" },
@@ -32,6 +33,8 @@ export default function Layout({ children }: LayoutProps) {
 
   const clientLinks = [
     { to: "/cliente", icon: LayoutDashboard, label: "Meu Painel" },
+    { to: "/cliente/servicos", icon: Package, label: "Serviços & Produtos" },
+    { to: "/cliente/pedidos", icon: ShoppingBag, label: "Meus Pedidos" },
     { to: "/cliente/agendar", icon: Calendar, label: "Agendar" },
     { to: "/cliente/chat", icon: MessageCircle, label: "Chat" },
     { to: "/cliente/pagamentos", icon: DollarSign, label: "Pagamentos" },

@@ -1,13 +1,15 @@
 import { motion } from "framer-motion";
-import { Calendar, DollarSign, Clock, CheckCircle, Music } from "lucide-react";
+import { Calendar, DollarSign, Clock, CheckCircle, Music, Package, ShoppingBag } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useApp } from "../../context/AppContext";
 
 export default function ClientDashboard() {
-  const { currentUser, schedules, payments, quotes, services } = useApp();
+  const { currentUser, schedules, payments, quotes, services, orders } = useApp();
 
   const mySchedules = schedules.filter(s => s.clientId === currentUser?.id);
   const myPayments = payments.filter(p => p.clientId === currentUser?.id);
   const myQuotes = quotes.filter(q => q.clientId === currentUser?.id);
+  const myOrders = orders.filter(o => o.clientId === currentUser?.id);
   const totalSpent = myPayments.filter(p => p.status === "confirmado").reduce((s, p) => s + p.amount, 0);
   const upcomingSchedules = mySchedules.filter(s => s.status === "confirmado" || s.status === "pendente");
 
@@ -81,8 +83,64 @@ export default function ClientDashboard() {
         )}
       </motion.div>
 
+      {/* CTA Serviços */}
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
+        <Link
+          to="/cliente/servicos"
+          className="block p-6 rounded-2xl bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 hover:from-purple-500 hover:via-pink-500 hover:to-purple-500 transition-all shadow-lg shadow-purple-500/20"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-white font-bold text-lg flex items-center gap-2">
+                <ShoppingBag className="w-5 h-5" />
+                Faça seu pedido agora!
+              </h3>
+              <p className="text-white/80 text-sm mt-1">Explore nossos serviços e produtos exclusivos</p>
+            </div>
+            <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+              <Package className="w-6 h-6 text-white" />
+            </div>
+          </div>
+        </Link>
+      </motion.div>
+
+      {/* Meus Pedidos */}
+      {myOrders.length > 0 && (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.55 }} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-white font-semibold flex items-center gap-2">
+              <Package className="w-5 h-5 text-amber-400" />
+              Meus Pedidos
+            </h3>
+            <Link to="/cliente/pedidos" className="text-purple-300 hover:text-purple-200 text-sm">
+              Ver todos →
+            </Link>
+          </div>
+          <div className="space-y-2">
+            {myOrders.slice(-3).reverse().map(order => (
+              <div key={order.id} className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5">
+                <div>
+                  <p className="text-white text-sm font-medium">#{order.id.slice(0, 6).toUpperCase()}</p>
+                  <p className="text-gray-400 text-xs">{order.items.length} {order.items.length === 1 ? "item" : "itens"} • {new Date(order.createdAt).toLocaleDateString("pt-BR")}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-white font-medium">R$ {order.total.toFixed(2)}</p>
+                  <span className={`text-xs ${
+                    order.status === "concluido" ? "text-green-400" :
+                    order.status === "pendente" ? "text-amber-400" :
+                    order.status === "cancelado" ? "text-red-400" : "text-blue-400"
+                  }`}>
+                    {order.status === "pendente" ? "Pendente" : order.status === "aprovado" ? "Aprovado" : order.status === "em_producao" ? "Em produção" : order.status === "concluido" ? "Concluído" : "Cancelado"}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      )}
+
       {/* Orçamentos */}
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
         <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
           <DollarSign className="w-5 h-5 text-green-400" />
           Meus Orçamentos
