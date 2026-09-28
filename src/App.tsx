@@ -41,8 +41,14 @@ export default function App() {
     // Simula uma chamada de API
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    setIsLoading(false);
-    setSuccessMessage("Login realizado com sucesso! Redirecionando...");
+    // Verifica credenciais do administrador
+    if (email === "admin@exemplo.com" && password === "admin123") {
+      setIsLoading(false);
+      setSuccessMessage("Login realizado com sucesso! Redirecionando...");
+    } else {
+      setIsLoading(false);
+      setErrors({ email: "E-mail ou senha inválidos" });
+    }
   };
 
   return (
@@ -322,6 +328,49 @@ export default function App() {
             </a>
           </motion.p>
         </div>
+
+        {/* Card de credenciais de demonstração */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1, duration: 0.4 }}
+          className="mt-4 p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xl"
+        >
+          <p className="text-xs text-gray-400 text-center mb-2 font-medium uppercase tracking-wider">
+            🔑 Credenciais de Acesso
+          </p>
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-gray-400">E-mail:</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail("admin@exemplo.com");
+                  setErrors({});
+                }}
+                className="text-purple-300 hover:text-purple-200 font-mono text-xs bg-white/5 px-2 py-0.5 rounded transition-colors"
+              >
+                admin@exemplo.com
+              </button>
+            </div>
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-gray-400">Senha:</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setPassword("admin123");
+                  setErrors({});
+                }}
+                className="text-purple-300 hover:text-purple-200 font-mono text-xs bg-white/5 px-2 py-0.5 rounded transition-colors"
+              >
+                admin123
+              </button>
+            </div>
+          </div>
+          <p className="text-[10px] text-gray-500 text-center mt-2">
+            Clique nos valores para preencher automaticamente
+          </p>
+        </motion.div>
       </motion.div>
     </div>
   );
